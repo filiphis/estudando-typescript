@@ -92,3 +92,78 @@ let itemId = <string>productName; // Faz a mesma coisa que o código acima /\.
 ```
 
 ## Funções no TypeScript
+
+Com TypeScrip também é possível definir tipagem para os parâmetros e retorno de uma função.
+
+Exemplo de utilização em funções:
+
+```ts
+function sum(a: number, b: number, c?: string): number {}
+// Tipando parâmetros e retorno.
+// Parâmetros podem ser opcionais.
+```
+
+### Void
+
+Quando uma função não possui nenhum retorno, o "retorno" dela será do tipo `void`.
+
+## Objetos
+
+Podemos tipar objetos inteiros utilizando o `type` ou a `interface`.
+Ao criar esse tipo, ele pode ser utilizado em variáveis ou funções, e elas devem respeitar o tipo que foi criado, tanto no nome e quantidade de parâmetros, como no tipo de cada um desses parâmetros.
+
+### Type
+
+Exemplo de utilização do type:
+
+```ts
+// Criando um tipo de objeto:
+type User = {
+  firstName: string;
+  lastName: string;
+  email: string:
+  password: string;
+  age: number;
+  country?: string; // interrogação informa que um valor é opcional.
+};
+
+const userName: User;
+userName = {
+///... valor ficam aqui, e respeitando o type, visto que essa variável é do tipo User.
+}
+```
+
+### Valores opcionais e non-null assertion
+
+Podemos definir em uma tipagem que determinando valor pode ser opcional, porem, isso pode gerar um problema.
+
+Por exemplo, se informarmos que o country de um usuário é opcional e futuramente tentarmos utilizar o campo country, devemos ficar atentos, pois, como o campo é opcional, pode ser que ela seja undefined ou não.
+
+Por exemplo:
+
+```ts
+type User = {
+  name: string;
+  age?: number; // age é opcional
+};
+
+const newUser: User = {
+  name: "Luiz",
+};
+
+function checkAge(age: number) {
+  return age >= 18;
+}
+
+checkAge(newUser.age);
+// Irá ocorrer um erro no parâmetro, pois, age pode existir ou não.
+```
+
+Uma funcionalidade que podemos utilizar quando queremos **garantir** que um valor não será nulo é o **non-null assertion**.
+
+Por exemplo:
+
+```ts
+checkAge(newUser.age!);
+// Não irá ocorrer erro, pois o exclamação garante que a variável age irá existir.
+```
