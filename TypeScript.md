@@ -133,7 +133,57 @@ userName = {
 }
 ```
 
-### Valores opcionais e non-null assertion
+### Interface
+
+São bem parecidas com os types.
+
+Algumas funcionalidades diferentes:
+
+- É possível definir que uma propriedade será somente de leitura `readyonly`, ou seja, após o valor do objeto ser definido, não poderá mais ser alterado.
+
+Por exemplo:
+
+```ts
+interface UserInterface {
+  readonly email: string;
+  password: string;
+}
+
+const userName: UserInterface = {
+  email: "user@mail.com",
+  password: "1234",
+};
+
+userName.email = "user_novo_email@mail.com";
+// Irá ocorrer um erro, pois o campo email, após definido não pode ser alterado.
+```
+
+### Unions ( & )
+
+Com unions é possível fazer com que um dado seja a união de dois **tipos** ou **interfaces**, ou seja, deverá ter a tipagem contida nos dois tipos informados.
+
+Por exemplo:
+
+```ts
+type Person = {
+  name: string;
+  age: number;
+  country: string;
+};
+
+type Author = {
+  books: string[];
+};
+
+const authorName: Person & Author = {
+  name: "Irineu",
+  age: 99,
+  country: "Brasil",
+  books: ["nome do livro 1", "nome do livro 2"],
+};
+```
+
+### Valores opcionais ( ? ) e non-null assertion ( ! )
 
 Podemos definir em uma tipagem que determinando valor pode ser opcional, porem, isso pode gerar um problema.
 
