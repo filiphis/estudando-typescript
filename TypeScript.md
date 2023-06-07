@@ -103,6 +103,25 @@ function sum(a: number, b: number, c?: string): number {}
 // Parâmetros podem ser opcionais.
 ```
 
+#### Tipando funções com interfaces
+
+Também podemos tipar os parâmetros e retorno de funções utilizando uma interface.
+
+Segue exemplo:
+
+```ts
+interface MathFunc {
+  (x: number, y: number): string;
+  // função deve receber dois parâmetros numéricos e seu retorno é do tipo string.
+}
+
+const sum: MathFunc = (x: number, y: number): number => x + y;
+// Irá ocorrer erro pois a interface informa que o retorno deve ser string,
+// E ao criarmos a função informamos que o retorno será number.
+```
+
+OBS: A interface irá considerar tanto a tipagem dinâmica, quanto estática.
+
 ### Void
 
 Quando uma função não possui nenhum retorno, o "retorno" dela será do tipo `void`.
@@ -147,6 +166,7 @@ Por exemplo:
 interface UserInterface {
   readonly email: string;
   password: string;
+  minhaFunc(): string; // Define que esse tipo tem que ter essa função, e com esse tipo de retorno.
 }
 
 const userName: UserInterface = {
