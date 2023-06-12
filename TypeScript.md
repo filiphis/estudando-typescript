@@ -103,7 +103,7 @@ function sum(a: number, b: number, c?: string): number {}
 // Parâmetros podem ser opcionais.
 ```
 
-#### Tipando funções com interfaces
+### Tipando funções com interfaces
 
 Também podemos tipar os parâmetros e retorno de funções utilizando uma interface.
 
@@ -131,7 +131,7 @@ Quando uma função não possui nenhum retorno, o "retorno" dela será do tipo `
 Podemos tipar objetos inteiros utilizando o `type` ou a `interface`.
 Ao criar esse tipo, ele pode ser utilizado em variáveis ou funções, e elas devem respeitar o tipo que foi criado, tanto no nome e quantidade de parâmetros, como no tipo de cada um desses parâmetros.
 
-### Type
+## Type
 
 Exemplo de utilização do type:
 
@@ -152,7 +152,7 @@ userName = {
 }
 ```
 
-### Interface
+## Interface
 
 São bem parecidas com os types.
 
@@ -178,7 +178,7 @@ userName.email = "user_novo_email@mail.com";
 // Irá ocorrer um erro, pois o campo email, após definido não pode ser alterado.
 ```
 
-### Unions ( & )
+## Unions ( & )
 
 Com unions é possível fazer com que um dado seja a união de dois **tipos** ou **interfaces**, ou seja, deverá ter a tipagem contida nos dois tipos informados.
 
@@ -203,7 +203,7 @@ const authorName: Person & Author = {
 };
 ```
 
-### Valores opcionais ( ? ) e non-null assertion ( ! )
+## Valores opcionais ( ? ) e non-null assertion ( ! )
 
 Podemos definir em uma tipagem que determinando valor pode ser opcional, porem, isso pode gerar um problema.
 
@@ -236,4 +236,134 @@ Por exemplo:
 ```ts
 checkAge(newUser.age!);
 // Não irá ocorrer erro, pois o exclamação garante que a variável age irá existir.
+```
+
+## Classes no TypeScript
+
+No Typescript foram feitas várias aprimorações no que se refere a orientação a objetos.
+
+### Criando classes no Typescript
+
+Segue exemplo de como criar uma classe básica no TypeScrip:
+
+```ts
+class Person {
+  id: number;
+  name: string;
+  age: number;
+
+  constructor(id: number, name: string, age: number) {
+    this.id = id;
+    this.name = name;
+    this.age = age;
+  }
+
+  sayMyName(): string {
+    return this.name;
+  }
+}
+
+const person = new Person(1, "Luiz Silveira", 29);
+```
+
+### Utilizando Interfaces com Classes
+
+Exemplo:
+
+```ts
+interface IPerson {
+  id: number;
+  name: string;
+  age: number;
+}
+
+class Person implements IPerson {
+  id: number;
+  name: string;
+  age: number;
+  // Propriedades devem seguir o interface que foi implementada, se não, irá ocorrer erro.
+
+  constructor(id: number, name: string, age: number) {
+    this.id = id;
+    this.name = name;
+    this.age = age;
+  }
+
+  sayMyName(): string {
+    return this.name;
+  }
+}
+
+const person = new Person(1, "Luiz Silveira", 29);
+```
+
+### Modificadores de Classes
+
+São utilizados para definir onde uma propriedade ou método pode ser alterado/acessado.
+
+OBS: Ao utilizar uma propriedade como protected, devem ser retirada de interfaces, pois, interfaces não aceitam a nomenclatura protected e private.
+
+#### Readonly
+
+Pode ser setada e alterada **somente no constructor**.
+
+#### Protected
+
+Acesso e/ou alterações são permitidos somente na **classe ou subclasses**.
+
+#### Private
+
+Acesso e/ou alterações são permitidos **somente na própria classe**.
+
+#### Exemplo
+
+Exemplo:
+
+```ts
+interface IPerson {
+  id: number;
+  name: string;
+  age: number;
+}
+
+class Person implements IPerson {
+  readonly id: number; // Pode ser
+  protected name: string;
+  private age: number;
+  // Propriedades devem seguir o interface que foi implementada, se não, irá ocorrer erro.
+
+  constructor(id: number, name: string, age: number) {
+    this.id = id;
+    this.name = name;
+    this.age = age;
+  }
+
+  sayMyName(): string {
+    return this.name;
+  }
+}
+
+const person = new Person(1, "Luiz Silveira", 29);
+```
+
+### SubClasses e Herança
+
+Também é possível criar subclasses e utilizar herança com o TypeScript.
+
+Exemplo:
+
+```ts
+class Employee extends Person {
+  constructor(id: number, name: string, age: number) {
+    super(id, name, age);
+  }
+
+  whoAmI() {
+    return this.name; // Possui acesso as propriedades da classe mãe.
+  }
+
+  myAge() {
+    return this.age; // Não possui acesso, pois age foi criada na classe mãe como privada.
+  }
+}
 ```
