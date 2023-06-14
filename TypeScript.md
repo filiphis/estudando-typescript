@@ -266,7 +266,29 @@ class Person {
 const person = new Person(1, "Luiz Silveira", 29);
 ```
 
-### Utilizando Interfaces com Classes
+**Shorthand para construtores de Classes**
+
+Existe uma forma melhor de declarar classes e seus construtores, que é utilizando um shorthand.
+
+Exemplo utilizando a mesma classe acima /\:
+
+```ts
+class Person {
+  constructor(
+    private id: number,
+    readonly name: string,
+    protected age: number
+  ) {}
+
+  sayMyName(): string {
+    return this.name;
+  }
+}
+
+const person = new Person(1, "Luiz Silveira", 29);
+```
+
+#### Utilizando Interfaces com Classes
 
 Exemplo:
 
@@ -297,25 +319,25 @@ class Person implements IPerson {
 const person = new Person(1, "Luiz Silveira", 29);
 ```
 
-### Modificadores de Classes
+#### Modificadores de Classes
 
 São utilizados para definir onde uma propriedade ou método pode ser alterado/acessado.
 
 OBS: Ao utilizar uma propriedade como protected, devem ser retirada de interfaces, pois, interfaces não aceitam a nomenclatura protected e private.
 
-#### Readonly
+##### Readonly
 
 Pode ser setada e alterada **somente no constructor**.
 
-#### Protected
+##### Protected
 
 Acesso e/ou alterações são permitidos somente na **classe ou subclasses**.
 
-#### Private
+##### Private
 
 Acesso e/ou alterações são permitidos **somente na própria classe**.
 
-#### Exemplo
+##### Exemplo
 
 Exemplo:
 
@@ -346,7 +368,7 @@ class Person implements IPerson {
 const person = new Person(1, "Luiz Silveira", 29);
 ```
 
-### SubClasses e Herança
+#### SubClasses e Herança
 
 Também é possível criar subclasses e utilizar herança com o TypeScript.
 
@@ -366,4 +388,53 @@ class Employee extends Person {
     return this.age; // Não possui acesso, pois age foi criada na classe mãe como privada.
   }
 }
+```
+
+## Generics
+
+É uma forma de passar tipos como parâmetros, deixando a tipagem de funções, classes e variáveis mais dinâmicas.
+
+Exemplo utilizando Arrow Functions:
+
+```ts
+// Cria uma função informando que terá o Genercic T. OBS: T é somente uma convenção para tipo.
+// O T será substituído pelo tipo do valor informado na primeira vez.
+const returnValue = <T>(value: T): T => value;
+
+const message = returnValue<string>("Hello");
+const count = returnValue<number>(5);
+```
+
+Exemplo utilizando Named Functions:
+
+```ts
+function getFirstValueFromArray<Type>(array: Type[]) {
+  return array[0];
+}
+
+const firstValueFromStringArray = getFirstValueFromArray<string>(["1", "2"]);
+const firstValueFromNumberArray = getFirstValueFromArray<number>([10, 20]);
+```
+
+### Gerenic com Classes
+
+Exemplo:
+
+```ts
+class GerenicNumber<T> {
+  zeroValue: T;
+  sum: (x: T, y: T) => T;
+}
+
+const myGerenic = new GerenicNumber<string>(); // Onde foi utilizado o T será string, e esse tipo pode ser alterado para cada instância conforme informemos.
+```
+
+## Utilizando Promises
+
+Exemplo:
+
+```ts
+const returnPromise = async (): Promise<string> => {
+  return 5;
+};
 ```
